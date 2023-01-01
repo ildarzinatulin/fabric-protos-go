@@ -78,6 +78,7 @@ const (
 	HeaderType_ORDERER_TRANSACTION  HeaderType = 4
 	HeaderType_DELIVER_SEEK_INFO    HeaderType = 5
 	HeaderType_CHAINCODE_PACKAGE    HeaderType = 6
+	НeaderType_ATTESTATION 			HeaderType = 7
 )
 
 var HeaderType_name = map[int32]string{
@@ -88,6 +89,7 @@ var HeaderType_name = map[int32]string{
 	4: "ORDERER_TRANSACTION",
 	5: "DELIVER_SEEK_INFO",
 	6: "CHAINCODE_PACKAGE",
+	7: "ATTESTATION",
 }
 
 var HeaderType_value = map[string]int32{
@@ -98,6 +100,7 @@ var HeaderType_value = map[string]int32{
 	"ORDERER_TRANSACTION":  4,
 	"DELIVER_SEEK_INFO":    5,
 	"CHAINCODE_PACKAGE":    6,
+	"ATTESTATION":          7,
 }
 
 func (x HeaderType) String() string {
