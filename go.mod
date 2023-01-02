@@ -1,9 +1,10 @@
-module github.com/hyperledger/fabric-protos-go
+module github.com/ildarzinatulin/fabric-protos-go
 
 go 1.17
 
 require (
 	github.com/golang/protobuf v1.5.0
+	github.com/hyperledger/fabric-protos-go v0.0.0-00010101000000-000000000000
 	google.golang.org/grpc v1.23.0
 	google.golang.org/protobuf v1.28.1
 )
