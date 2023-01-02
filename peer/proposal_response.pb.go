@@ -6,7 +6,7 @@ package peer
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	common "github.com/hyperledger/fabric-protos-go/common"
+	common "github.com/ildarzinatulin/fabric-protos-go/common"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	math "math"
 )
