@@ -15,4 +15,4 @@ require (
 	google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8 // indirect
 )
 
-replace github.com/hyperledger/fabric-protos-go => github.com/ildarzinatulin/fabric-protos-go latest
+replace github.com/hyperledger/fabric-protos-go => github.com/ildarzinatulin/fabric-protos-go v0.0.0-20230101125123-f1052b504205
