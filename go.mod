@@ -1,10 +1,9 @@
-module github.com/ildarzinatulin/fabric-protos-go
+module github.com/hyperledger/fabric-protos-go
 
 go 1.17
 
 require (
 	github.com/golang/protobuf v1.5.0
-	github.com/hyperledger/fabric-protos-go v0.3.0
 	google.golang.org/grpc v1.23.0
 	google.golang.org/protobuf v1.28.1
 )
@@ -15,3 +14,5 @@ require (
 	golang.org/x/text v0.3.0 // indirect
 	google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8 // indirect
 )
+
+replace github.com/hyperledger/fabric-protos-go => github.com/ildarzinatulin/fabric-protos-go latest
