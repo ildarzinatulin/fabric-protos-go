@@ -6,8 +6,11 @@ package common
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	"google.golang.org/protobuf/reflect/protoreflect"
+	"google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	math "math"
+	"sync"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -71,25 +74,27 @@ func (Status) EnumDescriptor() ([]byte, []int) {
 type HeaderType int32
 
 const (
-	HeaderType_MESSAGE              HeaderType = 0
-	HeaderType_CONFIG               HeaderType = 1
-	HeaderType_CONFIG_UPDATE        HeaderType = 2
-	HeaderType_ENDORSER_TRANSACTION HeaderType = 3
-	HeaderType_ORDERER_TRANSACTION  HeaderType = 4
-	HeaderType_DELIVER_SEEK_INFO    HeaderType = 5
-	HeaderType_CHAINCODE_PACKAGE    HeaderType = 6
-	НeaderType_ATTESTATION 			HeaderType = 7
+	HeaderType_MESSAGE              HeaderType = 0 // Used for messages which are signed but opaque
+	HeaderType_CONFIG               HeaderType = 1 // Used for messages which express the channel config
+	HeaderType_CONFIG_UPDATE        HeaderType = 2 // Used for transactions which update the channel config
+	HeaderType_ENDORSER_TRANSACTION HeaderType = 3 // Used by the SDK to submit endorser based transactions
+	HeaderType_ORDERER_TRANSACTION  HeaderType = 4 // Used internally by the orderer for management
+	HeaderType_DELIVER_SEEK_INFO    HeaderType = 5 // Used as the type for Envelope messages submitted to instruct the Deliver API to seek
+	HeaderType_CHAINCODE_PACKAGE    HeaderType = 6 // Used for packaging chaincode artifacts for install
+	HeaderType_ATTESTATION_RESULT   HeaderType = 10
+	HeaderType_ATTESTATION          HeaderType = 11
 )
 
 var HeaderType_name = map[int32]string{
-	0: "MESSAGE",
-	1: "CONFIG",
-	2: "CONFIG_UPDATE",
-	3: "ENDORSER_TRANSACTION",
-	4: "ORDERER_TRANSACTION",
-	5: "DELIVER_SEEK_INFO",
-	6: "CHAINCODE_PACKAGE",
-	7: "ATTESTATION",
+		0:  "MESSAGE",
+		1:  "CONFIG",
+		2:  "CONFIG_UPDATE",
+		3:  "ENDORSER_TRANSACTION",
+		4:  "ORDERER_TRANSACTION",
+		5:  "DELIVER_SEEK_INFO",
+		6:  "CHAINCODE_PACKAGE",
+		10: "ATTESTATION_RESULT",
+		11: "ATTESTATION",
 }
 
 var HeaderType_value = map[string]int32{
@@ -100,7 +105,8 @@ var HeaderType_value = map[string]int32{
 	"ORDERER_TRANSACTION":  4,
 	"DELIVER_SEEK_INFO":    5,
 	"CHAINCODE_PACKAGE":    6,
-	"ATTESTATION":          7,
+	"ATTESTATION_RESULT":   10,
+	"ATTESTATION":          11,
 }
 
 func (x HeaderType) String() string {
@@ -892,6 +898,138 @@ func (m *OrdererBlockMetadata) GetConsenterMetadata() []byte {
 	return nil
 }
 
+var (
+	file_common_attestation_proto_rawDescOnce sync.Once
+	file_common_attestation_proto_rawDescData = fileDescriptor_8f954d82c0b891f6
+)
+
+var file_common_attestation_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+
+func file_common_attestation_proto_rawDescGZIP() []byte {
+	file_common_attestation_proto_rawDescOnce.Do(func() {
+		file_common_attestation_proto_rawDescData = protoimpl.X.CompressGZIP(file_common_attestation_proto_rawDescData)
+	})
+	return file_common_attestation_proto_rawDescData
+}
+
+type AttestationEnvelope struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TrieHead    []byte `protobuf:"bytes,1,opt,name=trie_head,json=trieHead,proto3" json:"trie_head,omitempty"`
+	BlockNumber uint64 `protobuf:"varint,2,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
+}
+
+func (x *AttestationEnvelope) Reset() {
+	*x = AttestationEnvelope{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_attestation_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AttestationEnvelope) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AttestationEnvelope) ProtoMessage() {}
+
+func (x *AttestationEnvelope) ProtoReflect() protoreflect.Message {
+	mi := &file_common_attestation_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AttestationEnvelope.ProtoReflect.Descriptor instead.
+func (*AttestationEnvelope) Descriptor() ([]byte, []int) {
+	return file_common_attestation_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *AttestationEnvelope) GetTrieHead() []byte {
+	if x != nil {
+		return x.TrieHead
+	}
+	return nil
+}
+
+func (x *AttestationEnvelope) GetBlockNumber() uint64 {
+	if x != nil {
+		return x.BlockNumber
+	}
+	return 0
+}
+
+type AttestationResultEnvelope struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ChosenTrieHead []byte      `protobuf:"bytes,1,opt,name=chosen_trie_head,json=chosenTrieHead,proto3" json:"chosen_trie_head,omitempty"`
+	BlockNumber    uint64      `protobuf:"varint,2,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
+	Proof          []*Envelope `protobuf:"bytes,3,rep,name=proof,proto3" json:"proof,omitempty"`
+}
+
+func (x *AttestationResultEnvelope) Reset() {
+	*x = AttestationResultEnvelope{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_attestation_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AttestationResultEnvelope) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AttestationResultEnvelope) ProtoMessage() {}
+
+func (x *AttestationResultEnvelope) ProtoReflect() protoreflect.Message {
+	mi := &file_common_attestation_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AttestationResultEnvelope.ProtoReflect.Descriptor instead.
+func (*AttestationResultEnvelope) Descriptor() ([]byte, []int) {
+	return file_common_attestation_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *AttestationResultEnvelope) GetChosenTrieHead() []byte {
+	if x != nil {
+		return x.ChosenTrieHead
+	}
+	return nil
+}
+
+func (x *AttestationResultEnvelope) GetBlockNumber() uint64 {
+	if x != nil {
+		return x.BlockNumber
+	}
+	return 0
+}
+
+func (x *AttestationResultEnvelope) GetProof() []*Envelope {
+	if x != nil {
+		return x.Proof
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterEnum("common.Status", Status_name, Status_value)
 	proto.RegisterEnum("common.HeaderType", HeaderType_name, HeaderType_value)
@@ -910,6 +1048,8 @@ func init() {
 	proto.RegisterType((*BlockData)(nil), "common.BlockData")
 	proto.RegisterType((*BlockMetadata)(nil), "common.BlockMetadata")
 	proto.RegisterType((*OrdererBlockMetadata)(nil), "common.OrdererBlockMetadata")
+	proto.RegisterType((*AttestationEnvelope)(nil), "common.AttestationEnvelope")
+	proto.RegisterType((*AttestationEnvelope)(nil), "common.AttestationResultEnvelope")
 }
 
 func init() { proto.RegisterFile("common/common.proto", fileDescriptor_8f954d82c0b891f6) }
