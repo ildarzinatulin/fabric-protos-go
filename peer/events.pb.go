@@ -11,8 +11,8 @@
 package peer
 
 import (
-	common "github.com/hyperledger/fabric-protos-go-apiv2/common"
-	rwset "github.com/hyperledger/fabric-protos-go-apiv2/ledger/rwset"
+	common "github.com/ildarzinatulin/fabric-protos-go/common"
+	rwset "github.com/ildarzinatulin/fabric-protos-go/ledger/rwset"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

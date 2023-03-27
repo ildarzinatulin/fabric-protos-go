@@ -11,9 +11,9 @@
 package discovery
 
 import (
-	gossip "github.com/hyperledger/fabric-protos-go-apiv2/gossip"
-	msp "github.com/hyperledger/fabric-protos-go-apiv2/msp"
-	peer "github.com/hyperledger/fabric-protos-go-apiv2/peer"
+	gossip "github.com/ildarzinatulin/fabric-protos-go/gossip"
+	msp "github.com/ildarzinatulin/fabric-protos-go/msp"
+	peer "github.com/ildarzinatulin/fabric-protos-go/peer"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

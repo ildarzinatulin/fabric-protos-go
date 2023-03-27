@@ -1,4 +1,4 @@
-module github.com/hyperledger/fabric-protos-go-apiv2
+module github.com/ildarzinatulin/fabric-protos-go
 
 go 1.17
 

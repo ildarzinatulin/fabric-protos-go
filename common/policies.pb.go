@@ -11,7 +11,7 @@
 package common
 
 import (
-	msp "github.com/hyperledger/fabric-protos-go-apiv2/msp"
+	msp "github.com/ildarzinatulin/fabric-protos-go/msp"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

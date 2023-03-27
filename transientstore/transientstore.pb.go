@@ -11,8 +11,8 @@
 package transientstore
 
 import (
-	rwset "github.com/hyperledger/fabric-protos-go-apiv2/ledger/rwset"
-	peer "github.com/hyperledger/fabric-protos-go-apiv2/peer"
+	rwset "github.com/ildarzinatulin/fabric-protos-go/ledger/rwset"
+	peer "github.com/ildarzinatulin/fabric-protos-go/peer"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
